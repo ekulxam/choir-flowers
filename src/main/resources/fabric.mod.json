@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "id": "${id}",
+  "version": "${version}",
+  "name": "${name}",
+  "description": "",
+  "authors": ["Seggan"],
+  "contact": {},
+  "license": "GPL-3.0",
+  "icon": "assets/icon.png",
+  "environment": "client",
+  "entrypoints": {
+    "client": [
+      "io.github.seggan.choirflowers.client.ChoirFlowersClient"
+    ]
+  },
+  "mixins": [
+    {
+      "config": "choir-flowers.client.mixins.json",
+      "environment": "client"
+    }
+  ],
+  "depends": {
+    "fabricloader": ">=${loader}",
+    "fabric-language-kotlin": ">=${kotlin_loader}",
+    "minecraft": "${mcdep}"
+  }
+}
