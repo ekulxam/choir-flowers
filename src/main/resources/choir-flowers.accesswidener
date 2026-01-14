@@ -1,0 +1,5 @@
+accessWidener v1 named
+
+accessible field net/minecraft/client/sounds/SoundManager soundEngine Lnet/minecraft/client/sounds/SoundEngine;
+accessible method net/minecraft/client/sounds/SoundEngine calculateVolume (FLnet/minecraft/sounds/SoundSource;)F
+accessible field net/minecraft/client/sounds/SoundEngine channelAccess Lnet/minecraft/client/sounds/ChannelAccess;

@@ -1,29 +1,23 @@
 package io.github.seggan.choirflowers.client
 
-import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap
-import net.minecraft.sounds.SoundEvent
+import kotlin.math.pow
 
-enum class Note {
-    C,
-    C_SHARP,
-    D,
-    D_SHARP,
-    E,
-    F,
-    F_SHARP,
-    G,
-    G_SHARP,
-    A,
-    A_SHARP,
-    B;
+enum class Note(private val semitoneOffset: Int) {
+    C(-9),
+    C_SHARP(-8),
+    D(-7),
+    D_SHARP(-6),
+    E(-5),
+    F(-4),
+    F_SHARP(-3),
+    G(-2),
+    G_SHARP(-1),
+    A(0),
+    A_SHARP(1),
+    B(2);
 
-    val noteName = name.lowercase().replace("_sharp", "#")
-
-    private val octaveInstances = Int2ObjectOpenHashMap<SoundEvent>()
-
-    init {
-        for (octave in 2..5) {
-            val id = Identifier
-        }
+    fun frequency(octave: Int): Double {
+        val semitonesFromA4 = semitoneOffset + (octave - 4) * 12
+        return 440.0 * 2.0.pow(semitonesFromA4 / 12.0)
     }
 }

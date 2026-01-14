@@ -41,18 +41,13 @@ java {
 
 loom {
     splitEnvironmentSourceSets()
+    accessWidenerPath = rootProject.file("src/main/resources/${mod.id}.accesswidener")
 
     mods {
         register("choir-flowers") {
             sourceSet("main")
             sourceSet("client")
         }
-    }
-}
-
-fabricApi {
-    configureDataGeneration {
-        client = true
     }
 }
 
