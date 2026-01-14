@@ -3,7 +3,6 @@ plugins {
     id("fabric-loom")
     id("maven-publish")
     id("com.modrinth.minotaur")
-    id("com.google.devtools.ksp")
     id("com.dorongold.task-tree") version "4.0.0"
 }
 
@@ -51,6 +50,12 @@ loom {
     }
 }
 
+fabricApi {
+    configureDataGeneration {
+        client = true
+    }
+}
+
 repositories {
     mavenLocal()
     maven("https://maven.parchmentmc.org")
@@ -65,8 +70,6 @@ dependencies {
     })
     modImplementation("net.fabricmc:fabric-loader:${deps["fabric_loader"]}")
     modImplementation("net.fabricmc:fabric-language-kotlin:${deps["kotlin_fabric_loader"]}")
-
-    ksp("io.github.seggan:kmixin:0.1.2")
 }
 
 tasks.processResources {

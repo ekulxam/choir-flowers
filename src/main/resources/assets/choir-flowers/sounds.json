@@ -1,0 +1,290 @@
+{
+  "chorus-flower/c2": {
+    "subtitle": "sound.choir-flowers.chorus-flower.sing",
+    "sounds": [
+      "choir-flowers:chorus-flower/c2"
+    ]
+  },
+  "chorus-flower/c#2": {
+    "subtitle": "sound.choir-flowers.chorus-flower.sing",
+    "sounds": [
+      "choir-flowers:chorus-flower/c#2"
+    ]
+  },
+  "chorus-flower/d2": {
+    "subtitle": "sound.choir-flowers.chorus-flower.sing",
+    "sounds": [
+      "choir-flowers:chorus-flower/d2"
+    ]
+  },
+  "chorus-flower/d#2": {
+    "subtitle": "sound.choir-flowers.chorus-flower.sing",
+    "sounds": [
+      "choir-flowers:chorus-flower/d#2"
+    ]
+  },
+  "chorus-flower/e2": {
+    "subtitle": "sound.choir-flowers.chorus-flower.sing",
+    "sounds": [
+      "choir-flowers:chorus-flower/e2"
+    ]
+  },
+  "chorus-flower/f2": {
+    "subtitle": "sound.choir-flowers.chorus-flower.sing",
+    "sounds": [
+      "choir-flowers:chorus-flower/f2"
+    ]
+  },
+  "chorus-flower/f#2": {
+    "subtitle": "sound.choir-flowers.chorus-flower.sing",
+    "sounds": [
+      "choir-flowers:chorus-flower/f#2"
+    ]
+  },
+  "chorus-flower/g2": {
+    "subtitle": "sound.choir-flowers.chorus-flower.sing",
+    "sounds": [
+      "choir-flowers:chorus-flower/g2"
+    ]
+  },
+  "chorus-flower/g#2": {
+    "subtitle": "sound.choir-flowers.chorus-flower.sing",
+    "sounds": [
+      "choir-flowers:chorus-flower/g#2"
+    ]
+  },
+  "chorus-flower/a2": {
+    "subtitle": "sound.choir-flowers.chorus-flower.sing",
+    "sounds": [
+      "choir-flowers:chorus-flower/a2"
+    ]
+  },
+  "chorus-flower/a#2": {
+    "subtitle": "sound.choir-flowers.chorus-flower.sing",
+    "sounds": [
+      "choir-flowers:chorus-flower/a#2"
+    ]
+  },
+  "chorus-flower/b2": {
+    "subtitle": "sound.choir-flowers.chorus-flower.sing",
+    "sounds": [
+      "choir-flowers:chorus-flower/b2"
+    ]
+  },
+  "chorus-flower/c3": {
+    "subtitle": "sound.choir-flowers.chorus-flower.sing",
+    "sounds": [
+      "choir-flowers:chorus-flower/c3"
+    ]
+  },
+  "chorus-flower/c#3": {
+    "subtitle": "sound.choir-flowers.chorus-flower.sing",
+    "sounds": [
+      "choir-flowers:chorus-flower/c#3"
+    ]
+  },
+  "chorus-flower/d3": {
+    "subtitle": "sound.choir-flowers.chorus-flower.sing",
+    "sounds": [
+      "choir-flowers:chorus-flower/d3"
+    ]
+  },
+  "chorus-flower/d#3": {
+    "subtitle": "sound.choir-flowers.chorus-flower.sing",
+    "sounds": [
+      "choir-flowers:chorus-flower/d#3"
+    ]
+  },
+  "chorus-flower/e3": {
+    "subtitle": "sound.choir-flowers.chorus-flower.sing",
+    "sounds": [
+      "choir-flowers:chorus-flower/e3"
+    ]
+  },
+  "chorus-flower/f3": {
+    "subtitle": "sound.choir-flowers.chorus-flower.sing",
+    "sounds": [
+      "choir-flowers:chorus-flower/f3"
+    ]
+  },
+  "chorus-flower/f#3": {
+    "subtitle": "sound.choir-flowers.chorus-flower.sing",
+    "sounds": [
+      "choir-flowers:chorus-flower/f#3"
+    ]
+  },
+  "chorus-flower/g3": {
+    "subtitle": "sound.choir-flowers.chorus-flower.sing",
+    "sounds": [
+      "choir-flowers:chorus-flower/g3"
+    ]
+  },
+  "chorus-flower/g#3": {
+    "subtitle": "sound.choir-flowers.chorus-flower.sing",
+    "sounds": [
+      "choir-flowers:chorus-flower/g#3"
+    ]
+  },
+  "chorus-flower/a3": {
+    "subtitle": "sound.choir-flowers.chorus-flower.sing",
+    "sounds": [
+      "choir-flowers:chorus-flower/a3"
+    ]
+  },
+  "chorus-flower/a#3": {
+    "subtitle": "sound.choir-flowers.chorus-flower.sing",
+    "sounds": [
+      "choir-flowers:chorus-flower/a#3"
+    ]
+  },
+  "chorus-flower/b3": {
+    "subtitle": "sound.choir-flowers.chorus-flower.sing",
+    "sounds": [
+      "choir-flowers:chorus-flower/b3"
+    ]
+  },
+  "chorus-flower/c4": {
+    "subtitle": "sound.choir-flowers.chorus-flower.sing",
+    "sounds": [
+      "choir-flowers:chorus-flower/c4"
+    ]
+  },
+  "chorus-flower/c#4": {
+    "subtitle": "sound.choir-flowers.chorus-flower.sing",
+    "sounds": [
+      "choir-flowers:chorus-flower/c#4"
+    ]
+  },
+  "chorus-flower/d4": {
+    "subtitle": "sound.choir-flowers.chorus-flower.sing",
+    "sounds": [
+      "choir-flowers:chorus-flower/d4"
+    ]
+  },
+  "chorus-flower/d#4": {
+    "subtitle": "sound.choir-flowers.chorus-flower.sing",
+    "sounds": [
+      "choir-flowers:chorus-flower/d#4"
+    ]
+  },
+  "chorus-flower/e4": {
+    "subtitle": "sound.choir-flowers.chorus-flower.sing",
+    "sounds": [
+      "choir-flowers:chorus-flower/e4"
+    ]
+  },
+  "chorus-flower/f4": {
+    "subtitle": "sound.choir-flowers.chorus-flower.sing",
+    "sounds": [
+      "choir-flowers:chorus-flower/f4"
+    ]
+  },
+  "chorus-flower/f#4": {
+    "subtitle": "sound.choir-flowers.chorus-flower.sing",
+    "sounds": [
+      "choir-flowers:chorus-flower/f#4"
+    ]
+  },
+  "chorus-flower/g4": {
+    "subtitle": "sound.choir-flowers.chorus-flower.sing",
+    "sounds": [
+      "choir-flowers:chorus-flower/g4"
+    ]
+  },
+  "chorus-flower/g#4": {
+    "subtitle": "sound.choir-flowers.chorus-flower.sing",
+    "sounds": [
+      "choir-flowers:chorus-flower/g#4"
+    ]
+  },
+  "chorus-flower/a4": {
+    "subtitle": "sound.choir-flowers.chorus-flower.sing",
+    "sounds": [
+      "choir-flowers:chorus-flower/a4"
+    ]
+  },
+  "chorus-flower/a#4": {
+    "subtitle": "sound.choir-flowers.chorus-flower.sing",
+    "sounds": [
+      "choir-flowers:chorus-flower/a#4"
+    ]
+  },
+  "chorus-flower/b4": {
+    "subtitle": "sound.choir-flowers.chorus-flower.sing",
+    "sounds": [
+      "choir-flowers:chorus-flower/b4"
+    ]
+  },
+  "chorus-flower/c5": {
+    "subtitle": "sound.choir-flowers.chorus-flower.sing",
+    "sounds": [
+      "choir-flowers:chorus-flower/c5"
+    ]
+  },
+  "chorus-flower/c#5": {
+    "subtitle": "sound.choir-flowers.chorus-flower.sing",
+    "sounds": [
+      "choir-flowers:chorus-flower/c#5"
+    ]
+  },
+  "chorus-flower/d5": {
+    "subtitle": "sound.choir-flowers.chorus-flower.sing",
+    "sounds": [
+      "choir-flowers:chorus-flower/d5"
+    ]
+  },
+  "chorus-flower/d#5": {
+    "subtitle": "sound.choir-flowers.chorus-flower.sing",
+    "sounds": [
+      "choir-flowers:chorus-flower/d#5"
+    ]
+  },
+  "chorus-flower/e5": {
+    "subtitle": "sound.choir-flowers.chorus-flower.sing",
+    "sounds": [
+      "choir-flowers:chorus-flower/e5"
+    ]
+  },
+  "chorus-flower/f5": {
+    "subtitle": "sound.choir-flowers.chorus-flower.sing",
+    "sounds": [
+      "choir-flowers:chorus-flower/f5"
+    ]
+  },
+  "chorus-flower/f#5": {
+    "subtitle": "sound.choir-flowers.chorus-flower.sing",
+    "sounds": [
+      "choir-flowers:chorus-flower/f#5"
+    ]
+  },
+  "chorus-flower/g5": {
+    "subtitle": "sound.choir-flowers.chorus-flower.sing",
+    "sounds": [
+      "choir-flowers:chorus-flower/g5"
+    ]
+  },
+  "chorus-flower/g#5": {
+    "subtitle": "sound.choir-flowers.chorus-flower.sing",
+    "sounds": [
+      "choir-flowers:chorus-flower/g#5"
+    ]
+  },
+  "chorus-flower/a5": {
+    "subtitle": "sound.choir-flowers.chorus-flower.sing",
+    "sounds": [
+      "choir-flowers:chorus-flower/a5"
+    ]
+  },
+  "chorus-flower/a#5": {
+    "subtitle": "sound.choir-flowers.chorus-flower.sing",
+    "sounds": [
+      "choir-flowers:chorus-flower/a#5"
+    ]
+  },
+  "chorus-flower/b5": {
+    "subtitle": "sound.choir-flowers.chorus-flower.sing",
+    "sounds": [
+      "choir-flowers:chorus-flower/b5"
+    ]
+  }
+}
