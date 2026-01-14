@@ -1,6 +1,8 @@
 package io.github.seggan.choirflowers.client
 
-import kotlin.math.pow
+import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap
+import java.nio.ByteBuffer
+import javax.sound.sampled.AudioSystem
 
 enum class Note(private val semitoneOffset: Int) {
     C(-9),
@@ -16,8 +18,29 @@ enum class Note(private val semitoneOffset: Int) {
     A_SHARP(1),
     B(2);
 
-    fun frequency(octave: Int): Double {
-        val semitonesFromA4 = semitoneOffset + (octave - 4) * 12
-        return 440.0 * 2.0.pow(semitonesFromA4 / 12.0)
+    private val audios = Int2ObjectOpenHashMap<ByteBuffer>()
+
+    init {
+        val samplingRate = FORMAT.sampleRate.toInt()
+        for (octave in 2..5) {
+            val offsetSeconds = midiValue(octave) - 36 // 36 is MIDI C2
+            val start = offsetSeconds * samplingRate * FORMAT.frameSize
+            val len = samplingRate * FORMAT.frameSize
+            audios[octave] = allNoteAudio.slice(start, len)
+            ChoirFlowersClient.LOGGER.info("Loaded note $this$octave")
+        }
     }
+
+    fun midiValue(octave: Int): Int {
+        return (octave - 4) * 12 + 69 + semitoneOffset
+    }
+
+    private val humanName = name.replace("_SHARP", "#")
+    override fun toString() = humanName
 }
+
+private val FORMAT = AudioSystem.getAudioInputStream(Note::class.java.getResourceAsStream("/choir.wav")).use { it.format }
+
+private val allNoteAudio =
+    AudioSystem.getAudioInputStream(Note::class.java.getResourceAsStream("/choir.wav")).readAllBytes()
+        .let(ByteBuffer::wrap)
