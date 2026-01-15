@@ -105,7 +105,7 @@ while (midi <= 83) {
     val note = generateLoopableChoirSection(f0, 1.0, 0.1)
     val pcmData = floatToPcm16(note)
     pcmData.rewind()
-    val stream = AudioInputStream(ByteBufferInputStream(pcmData), format, note.size.toLong() / format.frameSize)
+    val stream = AudioInputStream(ByteBufferInputStream(pcmData), format, pcmData.limit() / format.frameSize.toLong())
     AudioSystem.write(stream, AudioFileFormat.Type.WAVE, File("src/main/resources/notes/choir_$midi.wav"))
     println("Generated MIDI ${midi++}")
 }
