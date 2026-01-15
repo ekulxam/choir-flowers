@@ -20,9 +20,9 @@
       "environment": "client"
     }
   ],
-  "accessWidener": "choir-flowers.accesswidener",
   "depends": {
     "fabricloader": ">=${loader}",
+    "fabric-api": ">=${fabric_api}",
     "fabric-language-kotlin": ">=${kotlin_loader}",
     "minecraft": "${mcdep}"
   }

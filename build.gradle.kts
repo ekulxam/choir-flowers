@@ -41,7 +41,6 @@ java {
 
 loom {
     splitEnvironmentSourceSets()
-    accessWidenerPath = rootProject.file("src/main/resources/${mod.id}.accesswidener")
 
     mods {
         register("choir-flowers") {
@@ -64,6 +63,7 @@ dependencies {
         parchment("org.parchmentmc.data:parchment-${deps["parchment"]}@zip")
     })
     modImplementation("net.fabricmc:fabric-loader:${deps["fabric_loader"]}")
+    modImplementation("net.fabricmc.fabric-api:fabric-api:${deps["fabric_api"]}")
     modImplementation("net.fabricmc:fabric-language-kotlin:${deps["kotlin_fabric_loader"]}")
 }
 
@@ -73,6 +73,7 @@ tasks.processResources {
     inputs.property("version", mod.version)
     inputs.property("mcdep", mcDep)
     inputs.property("loader", deps["fabric_loader"])
+    inputs.property("fabric_api", deps["fabric_api"])
     inputs.property("kotlin_loader", deps["kotlin_fabric_loader"])
 
     val map = mapOf(
@@ -81,6 +82,7 @@ tasks.processResources {
         "version" to mod.version,
         "mcdep" to mcDep,
         "loader" to deps["fabric_loader"],
+        "fabric_api" to deps["fabric_api"],
         "kotlin_loader" to deps["kotlin_fabric_loader"]
     )
 

@@ -9,11 +9,11 @@ pluginManagement {
 
 plugins {
     id("org.gradle.toolchains.foojay-resolver-convention") version "0.9.0"
-    id("dev.kikugie.stonecutter") version "0.7.10"
+    id("dev.kikugie.stonecutter") version "0.8.2"
 }
 
 stonecutter {
     create(rootProject) {
-        versions("1.21.10")
+        versions("1.21.11")
     }
 }

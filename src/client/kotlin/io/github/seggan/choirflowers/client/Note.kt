@@ -2,6 +2,7 @@ package io.github.seggan.choirflowers.client
 
 import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap
 import java.nio.ByteBuffer
+import javax.sound.sampled.AudioFormat
 import javax.sound.sampled.AudioSystem
 
 enum class Note(private val semitoneOffset: Int) {
@@ -18,16 +19,16 @@ enum class Note(private val semitoneOffset: Int) {
     A_SHARP(1),
     B(2);
 
-    private val audios = Int2ObjectOpenHashMap<ByteBuffer>()
+    private val audios = Int2ObjectOpenHashMap<Pair<AudioFormat, ByteBuffer>>()
 
     init {
-        val samplingRate = FORMAT.sampleRate.toInt()
         for (octave in 2..5) {
-            val offsetSeconds = midiValue(octave) - 36 // 36 is MIDI C2
-            val start = offsetSeconds * samplingRate * FORMAT.frameSize
-            val len = samplingRate * FORMAT.frameSize
-            audios[octave] = allNoteAudio.slice(start, len)
-            ChoirFlowersClient.LOGGER.info("Loaded note $this$octave")
+            val midi = midiValue(octave)
+            val audioInputStream =
+                AudioSystem.getAudioInputStream(Note::class.java.getResource("/notes/choir_$midi.wav"))
+            val format = audioInputStream.format
+            val buffer = ByteBuffer.wrap(audioInputStream.readAllBytes()).asReadOnlyBuffer()
+            audios[octave] = format to buffer
         }
     }
 
@@ -35,12 +36,9 @@ enum class Note(private val semitoneOffset: Int) {
         return (octave - 4) * 12 + 69 + semitoneOffset
     }
 
-    private val humanName = name.replace("_SHARP", "#")
-    override fun toString() = humanName
+    fun getAudioForOctave(octave: Int): Pair<AudioFormat, ByteBuffer> {
+        return audios[octave] ?: error("No audio for note $this in octave $octave")
+    }
+
+    override fun toString() = name.replace("_SHARP", "#")
 }
-
-private val FORMAT = AudioSystem.getAudioInputStream(Note::class.java.getResourceAsStream("/choir.wav")).use { it.format }
-
-private val allNoteAudio =
-    AudioSystem.getAudioInputStream(Note::class.java.getResourceAsStream("/choir.wav")).readAllBytes()
-        .let(ByteBuffer::wrap)

@@ -1,0 +1,10 @@
+{
+  "chorus_flower_sing": {
+    "sounds": [
+      {
+        "name": "fabric-sound-api-v1:empty",
+        "stream": true
+      }
+    ]
+  }
+}

@@ -2,8 +2,6 @@
 
 import com.jogamp.common.nio.ByteBufferInputStream
 import java.io.File
-import java.io.InputStream
-import java.io.SequenceInputStream
 import java.nio.ByteBuffer
 import java.nio.ByteOrder
 import java.util.concurrent.ThreadLocalRandom
@@ -101,16 +99,13 @@ fun floatToPcm16(input: FloatArray): ByteBuffer {
 
 // BEGIN MAIN
 
-var stream = InputStream.nullInputStream()!!
 var midi = 36
 while (midi <= 83) {
     val f0 = 440.0 * 2.0.pow((midi - 69) / 12.0)
     val note = generateLoopableChoirSection(f0, 1.0, 0.1)
     val pcmData = floatToPcm16(note)
     pcmData.rewind()
-    stream = SequenceInputStream(stream, ByteBufferInputStream(pcmData))
+    val stream = AudioInputStream(ByteBufferInputStream(pcmData), format, note.size.toLong() / format.frameSize)
+    AudioSystem.write(stream, AudioFileFormat.Type.WAVE, File("src/main/resources/notes/choir_$midi.wav"))
     println("Generated MIDI ${midi++}")
 }
-
-val audio = AudioInputStream(stream, format, 48 * format.sampleRate.toLong())
-AudioSystem.write(audio, AudioFileFormat.Type.WAVE, File("src/main/resources/choir.wav"))
