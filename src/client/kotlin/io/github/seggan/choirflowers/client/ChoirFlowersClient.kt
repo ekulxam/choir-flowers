@@ -5,6 +5,7 @@ import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientChunkEvents
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents
 import net.minecraft.world.level.block.Blocks
 import org.slf4j.LoggerFactory
+import kotlin.time.measureTime
 
 class ChoirFlowersClient : ClientModInitializer {
 
@@ -19,7 +20,7 @@ class ChoirFlowersClient : ClientModInitializer {
             stopSingingChunk(chunk.pos)
         }
         ClientTickEvents.START_WORLD_TICK.register {
-            updateSound()
+            LOGGER.info(measureTime { updateSound() }.toString())
         }
     }
 
