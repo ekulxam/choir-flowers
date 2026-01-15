@@ -1,6 +1,6 @@
 package io.github.seggan.choirflowers.client.mixin;
 
-import io.github.seggan.choirflowers.client.ChoirFlowersManager;
+import io.github.seggan.choirflowers.client.ChoirFlowers;
 import net.minecraft.client.renderer.LevelRenderer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.BlockGetter;
@@ -18,9 +18,9 @@ public abstract class LevelRendererMixin {
     private void choirflowers$onBlockChanged(BlockGetter level, BlockPos pos, BlockState oldState, BlockState newState, int flags, CallbackInfo ci) {
         if (oldState == null) return;
         if (newState.is(Blocks.CHORUS_FLOWER)) {
-            ChoirFlowersManager.startSinging(pos);
+            ChoirFlowers.startSinging(pos);
         } else if (oldState.is(Blocks.CHORUS_FLOWER)) {
-            ChoirFlowersManager.stopSinging(pos);
+            ChoirFlowers.stopSinging(pos);
         }
     }
 }

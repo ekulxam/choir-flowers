@@ -1,33 +1,26 @@
 package io.github.seggan.choirflowers.client
 
 import net.fabricmc.api.ClientModInitializer
-import net.fabricmc.fabric.api.client.command.v2.ClientCommandManager
-import net.fabricmc.fabric.api.client.command.v2.ClientCommandRegistrationCallback
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientChunkEvents
+import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents
 import net.minecraft.world.level.block.Blocks
 import org.slf4j.LoggerFactory
+import kotlin.time.measureTime
 
 class ChoirFlowersClient : ClientModInitializer {
 
     override fun onInitializeClient() {
         Note.A // Preload notes
-        ClientCommandRegistrationCallback.EVENT.register { dispatcher, _ ->
-            dispatcher.register(
-                ClientCommandManager.literal("a4")
-                    .executes { o ->
-                        val client = o.source.client
-                        client.soundManager.play(ChorusFlowerSound(Note.A, 4, client.player!!.position()))
-                        0
-                    }
-            )
-        }
         ClientChunkEvents.CHUNK_LOAD.register { _, chunk ->
             chunk.findBlocks({ it.`is`(Blocks.CHORUS_FLOWER) }) { pos, _ ->
-                ChoirFlowersManager.startSinging(pos)
+                startSinging(pos)
             }
         }
         ClientChunkEvents.CHUNK_UNLOAD.register { _, chunk ->
-            ChoirFlowersManager.stopSingingChunk(chunk.pos)
+            stopSingingChunk(chunk.pos)
+        }
+        ClientTickEvents.START_WORLD_TICK.register {
+            LOGGER.info(measureTime { updateSound() }.toString())
         }
     }
 

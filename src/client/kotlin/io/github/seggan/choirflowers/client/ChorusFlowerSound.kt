@@ -1,11 +1,11 @@
 package io.github.seggan.choirflowers.client
 
 import net.minecraft.client.resources.sounds.AbstractSoundInstance
-import net.minecraft.client.resources.sounds.SoundInstance
 import net.minecraft.client.sounds.AudioStream
 import net.minecraft.client.sounds.SoundBufferLibrary
 import net.minecraft.resources.Identifier
 import net.minecraft.sounds.SoundSource
+import net.minecraft.util.RandomSource
 import net.minecraft.world.phys.Vec3
 import org.lwjgl.BufferUtils
 import java.nio.ByteBuffer
@@ -15,7 +15,7 @@ import javax.sound.sampled.AudioFormat
 class ChorusFlowerSound(note: Note, octave: Int, pos: Vec3) : AbstractSoundInstance(
     Identifier.fromNamespaceAndPath(ChoirFlowersClient.MOD_ID, "chorus_flower_sing"),
     SoundSource.BLOCKS,
-    SoundInstance.createUnseededRandom()
+    RandomSource.createNewThreadLocalInstance()
 ) {
 
     private val format: AudioFormat
