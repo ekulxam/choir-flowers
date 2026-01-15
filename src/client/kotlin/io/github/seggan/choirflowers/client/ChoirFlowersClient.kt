@@ -12,15 +12,14 @@ class ChoirFlowersClient : ClientModInitializer {
         Note.A // Preload notes
         ClientChunkEvents.CHUNK_LOAD.register { _, chunk ->
             chunk.findBlocks({ it.`is`(Blocks.CHORUS_FLOWER) }) { pos, _ ->
-                startSinging(pos)
+                SingingChorusFlower.startSinging(pos)
             }
         }
         ClientChunkEvents.CHUNK_UNLOAD.register { _, chunk ->
-            stopSingingChunk(chunk.pos)
+            SingingChorusFlower.unloadChunk(chunk.pos)
         }
         ClientTickEvents.START_WORLD_TICK.register {
-            //LOGGER.info(measureTime { updateSound() }.toString())
-            updateSound()
+            SingingChorusFlower.tickAll()
         }
     }
 
