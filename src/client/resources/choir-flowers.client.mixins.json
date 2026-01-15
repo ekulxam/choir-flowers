@@ -4,7 +4,7 @@
   "package": "io.github.seggan.choirflowers.client.mixin",
   "compatibilityLevel": "JAVA_21",
   "client": [
-    "ClientLevelMixin"
+    "LevelRendererMixin"
   ],
   "injectors": {
     "defaultRequire": 1
