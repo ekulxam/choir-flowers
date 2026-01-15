@@ -2,6 +2,7 @@ package io.github.seggan.choirflowers.client
 
 import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap
 import java.nio.ByteBuffer
+import java.nio.ByteOrder
 import javax.sound.sampled.AudioFormat
 import javax.sound.sampled.AudioSystem
 
@@ -19,7 +20,7 @@ enum class Note(private val semitoneOffset: Int) {
     A_SHARP(1),
     B(2);
 
-    private val audios = Int2ObjectOpenHashMap<Pair<AudioFormat, ByteBuffer>>()
+    private val audios = Int2ObjectOpenHashMap<Pair<AudioFormat, ShortArray>>()
 
     init {
         for (octave in 2..5) {
@@ -27,9 +28,13 @@ enum class Note(private val semitoneOffset: Int) {
             val audioInputStream =
                 AudioSystem.getAudioInputStream(Note::class.java.getResource("/notes/choir_$midi.wav"))
             val format = audioInputStream.format
-            val buffer = ByteBuffer.wrap(audioInputStream.readAllBytes()).asReadOnlyBuffer()
-            audios[octave] = format to buffer
-            ChoirFlowersClient.LOGGER.info("Loaded note $this$octave (MIDI $midi) with format $format and ${buffer.limit()} bytes")
+            val buffer = ByteBuffer.wrap(audioInputStream.readAllBytes())
+            buffer.order(ByteOrder.LITTLE_ENDIAN)
+            val shortBuffer = buffer.asShortBuffer()
+            val shortArray = ShortArray(shortBuffer.limit())
+            shortBuffer.get(shortArray)
+            audios[octave] = format to shortArray
+            LOGGER.info("Loaded note $this$octave (MIDI $midi) with format $format and ${buffer.limit()} bytes")
         }
     }
 
@@ -37,7 +42,7 @@ enum class Note(private val semitoneOffset: Int) {
         return (octave - 4) * 12 + 69 + semitoneOffset
     }
 
-    fun getAudioForOctave(octave: Int): Pair<AudioFormat, ByteBuffer> {
+    fun getAudioForOctave(octave: Int): Pair<AudioFormat, ShortArray> {
         return audios[octave] ?: error("No audio for note $this in octave $octave")
     }
 

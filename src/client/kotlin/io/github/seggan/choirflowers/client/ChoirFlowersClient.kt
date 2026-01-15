@@ -22,11 +22,8 @@ class ChoirFlowersClient : ClientModInitializer {
             SingingChorusFlower.tickAll()
         }
     }
-
-    companion object {
-        const val MOD_ID = "choir-flowers"
-
-        @JvmField
-        val LOGGER = LoggerFactory.getLogger(MOD_ID)!!
-    }
 }
+
+const val MOD_ID = "choir-flowers"
+
+internal val LOGGER = LoggerFactory.getLogger(MOD_ID)!!

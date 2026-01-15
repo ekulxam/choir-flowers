@@ -13,13 +13,13 @@ import java.util.concurrent.CompletableFuture
 import javax.sound.sampled.AudioFormat
 
 class ChorusFlowerSound(note: Note, octave: Int, pos: Vec3) : AbstractSoundInstance(
-    Identifier.fromNamespaceAndPath(ChoirFlowersClient.MOD_ID, "chorus_flower_sing"),
+    Identifier.fromNamespaceAndPath(MOD_ID, "chorus_flower_sing"),
     SoundSource.BLOCKS,
     RandomSource.createNewThreadLocalInstance()
 ) {
 
     private val format: AudioFormat
-    private val audio: ByteBuffer
+    private val audio: ShortArray
     private var pos = 0
 
     init {
@@ -29,6 +29,15 @@ class ChorusFlowerSound(note: Note, octave: Int, pos: Vec3) : AbstractSoundInsta
         x = pos.x
         y = pos.y
         z = pos.z
+    }
+
+    fun setVolume(volume: Float) {
+        this.volume = volume
+    }
+
+    override fun getVolume(): Float {
+        LOGGER.info("getVolume: $volume")
+        return super.getVolume()
     }
 
     override fun getAudioStream(loader: SoundBufferLibrary, id: Identifier, repeatInstantly: Boolean): CompletableFuture<AudioStream> {
@@ -42,19 +51,8 @@ class ChorusFlowerSound(note: Note, octave: Int, pos: Vec3) : AbstractSoundInsta
         override fun read(size: Int): ByteBuffer {
             val buf = BufferUtils.createByteBuffer(size)
             while (buf.hasRemaining()) {
-                val remainingSource = audio.limit() - pos
-                val remainingDest = buf.remaining()
-
-                val toCopy = minOf(remainingSource, remainingDest)
-                val slice = audio.duplicate()
-                slice.position(pos)
-                slice.limit(pos + toCopy)
-                buf.put(slice)
-
-                pos += toCopy
-                if (pos >= audio.limit()) {
-                    pos = 0
-                }
+                buf.putShort(audio[pos])
+                pos = (pos + 1) % audio.size
             }
             buf.flip()
             return buf
