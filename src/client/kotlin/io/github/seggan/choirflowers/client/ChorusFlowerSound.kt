@@ -11,6 +11,8 @@ import org.lwjgl.BufferUtils
 import java.nio.ByteBuffer
 import java.util.concurrent.CompletableFuture
 import javax.sound.sampled.AudioFormat
+import kotlin.math.PI
+import kotlin.math.sin
 
 class ChorusFlowerSound(note: Note, octave: Int, pos: Vec3) : AbstractSoundInstance(
     Identifier.fromNamespaceAndPath(MOD_ID, "chorus_flower_sing"),
@@ -18,41 +20,43 @@ class ChorusFlowerSound(note: Note, octave: Int, pos: Vec3) : AbstractSoundInsta
     RandomSource.createNewThreadLocalInstance()
 ) {
 
-    private val format: AudioFormat
-    private val audio: ShortArray
+    private val audio = note.getAudioForOctave(octave)
     private var pos = 0
 
     init {
-        val (fmt, buf) = note.getAudioForOctave(octave)
-        format = fmt
-        audio = buf
         x = pos.x
         y = pos.y
         z = pos.z
+        volume = 0.1f
     }
 
-    fun setVolume(volume: Float) {
-        this.volume = volume
+    fun setVolume(vol: Float) {
+        volume = vol
     }
 
-    override fun getVolume(): Float {
-        LOGGER.info("getVolume: $volume")
-        return super.getVolume()
-    }
-
-    override fun getAudioStream(loader: SoundBufferLibrary, id: Identifier, repeatInstantly: Boolean): CompletableFuture<AudioStream> {
+    override fun getAudioStream(
+        loader: SoundBufferLibrary,
+        id: Identifier,
+        repeatInstantly: Boolean
+    ): CompletableFuture<AudioStream> {
         return CompletableFuture.completedFuture(Audio())
     }
 
+    private val randomFrequency = random.nextDouble()
+    private val randomPhase = random.nextDouble() * PI
+    private val randomAmplitude = random.nextDouble()
+
     private inner class Audio : AudioStream {
 
-        override fun getFormat(): AudioFormat = this@ChorusFlowerSound.format
+        override fun getFormat(): AudioFormat = FORMAT
 
         override fun read(size: Int): ByteBuffer {
             val buf = BufferUtils.createByteBuffer(size)
             while (buf.hasRemaining()) {
-                buf.putShort(audio[pos])
-                pos = (pos + 1) % audio.size
+                val sample = audio[pos % audio.size]
+                val preAmp = (randomAmplitude * sin(pos / FORMAT.sampleRate * randomFrequency + randomPhase).toFloat() + 1f) / 2f * 0.5f + 0.5f
+                buf.putShort((sample * preAmp).toInt().toShort())
+                pos++
             }
             buf.flip()
             return buf

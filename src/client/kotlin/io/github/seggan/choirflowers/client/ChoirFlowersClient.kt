@@ -5,6 +5,7 @@ import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientChunkEvents
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents
 import net.minecraft.world.level.block.Blocks
 import org.slf4j.LoggerFactory
+import javax.sound.sampled.AudioFormat
 
 class ChoirFlowersClient : ClientModInitializer {
 
@@ -25,5 +26,5 @@ class ChoirFlowersClient : ClientModInitializer {
 }
 
 const val MOD_ID = "choir-flowers"
-
 internal val LOGGER = LoggerFactory.getLogger(MOD_ID)!!
+val FORMAT = AudioFormat(AudioFormat.Encoding.PCM_SIGNED, 44100f, 16, 1, 2, 44100f, false)
