@@ -29,7 +29,6 @@ enum class Note(private val semitoneOffset: Int) {
             val format = audioInputStream.format
             val buffer = ByteBuffer.wrap(audioInputStream.readAllBytes()).asReadOnlyBuffer()
             audios[octave] = format to buffer
-            ChoirFlowersClient.LOGGER.info("Loaded note $this$octave (MIDI $midi) with format $format and ${buffer.limit()} bytes")
         }
     }
 

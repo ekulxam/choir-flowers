@@ -42,7 +42,6 @@ fun stopSingingChunk(chunkPos: ChunkPos) {
 private const val MAX_DISTANCE = 16
 
 fun updateSound() {
-    var singing = 0
     for (flowers in singingChorusFlowers.values) {
         for ((pos, sound) in flowers) {
             val playerPos = Minecraft.getInstance().player?.position() ?: return
@@ -60,9 +59,7 @@ fun updateSound() {
                 if (!soundManager.isActive(sound)) {
                     soundManager.play(sound)
                 }
-                singing++
             }
         }
     }
-    ChoirFlowersClient.LOGGER.info(singing.toString())
 }
