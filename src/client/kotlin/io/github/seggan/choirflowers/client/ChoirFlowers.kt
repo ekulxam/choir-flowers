@@ -15,12 +15,14 @@ private val muted = mutableSetOf<BlockPos>()
 private val soundManager = Minecraft.getInstance().soundManager
 
 fun startSinging(pos: BlockPos) {
+    val pos = pos.immutable()
     val flowersInChunk = singingChorusFlowers.getOrPut(ChunkPos(pos)) { mutableMapOf() }
     if (pos in flowersInChunk) return
     flowersInChunk[pos] = ChorusFlowerSound(C_PENTATONIC.random(), (2..5).random(), Vec3(pos))
 }
 
 fun stopSinging(pos: BlockPos) {
+    val pos = pos.immutable()
     val chunkPos = ChunkPos(pos)
     val flowersInChunk = singingChorusFlowers[chunkPos] ?: return
     val sound = flowersInChunk.remove(pos) ?: return
@@ -42,10 +44,10 @@ fun stopSingingChunk(chunkPos: ChunkPos) {
 private const val MAX_DISTANCE = 16
 
 fun updateSound() {
+    val playerPos = Minecraft.getInstance().player?.position() ?: return
     var singing = 0
     for (flowers in singingChorusFlowers.values) {
         for ((pos, sound) in flowers) {
-            val playerPos = Minecraft.getInstance().player?.position() ?: return
             val isTooFar = playerPos.distanceToSqr(Vec3(pos)) > MAX_DISTANCE * MAX_DISTANCE
             if (pos in muted && !isTooFar) {
                 muted.remove(pos)
@@ -64,5 +66,5 @@ fun updateSound() {
             }
         }
     }
-    ChoirFlowersClient.LOGGER.info(singing.toString())
+    //ChoirFlowersClient.LOGGER.info(singing.toString())
 }
