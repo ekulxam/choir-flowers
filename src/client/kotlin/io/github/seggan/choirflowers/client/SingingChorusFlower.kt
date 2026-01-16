@@ -115,9 +115,7 @@ class SingingChorusFlower(pos: BlockPos) : Closeable {
         }
 
         fun tickAll() {
-            val playerPos = minecraft.player?.blockPosition() ?: return
-            for (chunk in ChunkPos.rangeClosed(ChunkPos(playerPos), 2)) {
-                val flowersInChunk = singingChorusFlowers[chunk] ?: continue
+            for (flowersInChunk in singingChorusFlowers.values) {
                 for (flower in flowersInChunk.values) {
                     flower.tick()
                 }
