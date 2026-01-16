@@ -1,17 +1,16 @@
 package io.github.seggan.choirflowers.client
 
+import io.github.seggan.choirflowers.client.note.Note
+import io.github.seggan.choirflowers.client.note.Pitch
 import net.minecraft.client.Minecraft
 import net.minecraft.core.BlockPos
-import net.minecraft.util.RandomSource
 import net.minecraft.world.level.ChunkPos
 import net.minecraft.world.phys.Vec3
 import java.io.Closeable
 
 class SingingChorusFlower(private val pos: BlockPos) : Closeable {
 
-    private val random = RandomSource.createNewThreadLocalInstance()
-
-    private val sound = ChorusFlowerSound(C_PENTATONIC.random(), (3..5).random(), Vec3(pos))
+    private val sound = ChorusFlowerSound(Pitch(C_PENTATONIC.random(), (3..5).random()), Vec3(pos))
 
     private var muted = false
 
