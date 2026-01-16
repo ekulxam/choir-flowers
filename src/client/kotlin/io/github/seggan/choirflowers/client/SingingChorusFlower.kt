@@ -14,7 +14,8 @@ class SingingChorusFlower(pos: BlockPos) : Closeable {
 
     private val playingPos = pos.center
 
-    private val pitch: Pitch
+    val scale: Scale
+    val pitch: Pitch
 
     init {
         val nearbyFlowers = ChunkPos.rangeClosed(ChunkPos(pos), 1).asSequence()
@@ -23,7 +24,8 @@ class SingingChorusFlower(pos: BlockPos) : Closeable {
             .groupBy { it.pitch.note }
             .mapValues { (_, notes) -> notes.map { it.playingPos.distanceTo(playingPos) }.average() }
         if (nearbyFlowers.isEmpty()) {
-            pitch = Pitch(Note.entries.random(), (3..5).random())
+            scale = Scale.MAJOR_SCALES.random()
+            pitch = Pitch(scale.notes.random(), (3..5).random())
         } else {
             val weights = WeightedSet<Scale>()
             for (scale in Scale.MAJOR_SCALES) {
@@ -31,7 +33,7 @@ class SingingChorusFlower(pos: BlockPos) : Closeable {
                 val weight = commonNotes.sumOf { (MAX_DISTANCE - it).coerceAtLeast(0.0) } * commonNotes.size
                 weights.add(WeightedSet.Element(scale, weight.toFloat()))
             }
-            val scale = weights.getRandom()
+            scale = weights.getRandom()
 
             val noteWeights = WeightedSet<Note>()
             noteWeights.add(scale.getNote(1), 2f)
@@ -105,7 +107,6 @@ class SingingChorusFlower(pos: BlockPos) : Closeable {
             }
         }
 
-        @JvmStatic
         fun unloadChunk(chunkPos: ChunkPos) {
             val flowersInChunk = singingChorusFlowers.remove(chunkPos).orEmpty()
             for (flower in flowersInChunk.values) {
@@ -113,13 +114,17 @@ class SingingChorusFlower(pos: BlockPos) : Closeable {
             }
         }
 
-        @JvmStatic
         fun tickAll() {
             for (flowersInChunk in singingChorusFlowers.values) {
                 for (flower in flowersInChunk.values) {
                     flower.tick()
                 }
             }
+        }
+
+        fun getInstance(pos: BlockPos): SingingChorusFlower? {
+            val flowersInChunk = singingChorusFlowers[ChunkPos(pos)] ?: return null
+            return flowersInChunk[pos]
         }
     }
 }
