@@ -12,7 +12,7 @@ import java.nio.ByteBuffer
 import java.util.concurrent.CompletableFuture
 import javax.sound.sampled.AudioFormat
 
-class ChorusFlowerSound(private val audio: ShortArray, pos: Vec3) : AbstractSoundInstance(
+class ChorusFlowerSound(private val audio: ByteBuffer, pos: Vec3) : AbstractSoundInstance(
     Identifier.fromNamespaceAndPath(MOD_ID, "chorus_flower_sing"),
     SoundSource.BLOCKS,
     RandomSource.createNewThreadLocalInstance()
@@ -25,6 +25,7 @@ class ChorusFlowerSound(private val audio: ShortArray, pos: Vec3) : AbstractSoun
         y = pos.y
         z = pos.z
         volume = 0.1f
+        looping = true
     }
 
     fun setVolume(vol: Float) {
@@ -46,9 +47,12 @@ class ChorusFlowerSound(private val audio: ShortArray, pos: Vec3) : AbstractSoun
         override fun read(size: Int): ByteBuffer {
             val buf = BufferUtils.createByteBuffer(size)
             while (buf.hasRemaining()) {
-                val sample = audio[pos % audio.size]
-                buf.putShort(sample)
-                pos++
+                val toRead = (audio.limit() - pos).coerceAtMost(buf.remaining())
+                buf.put(audio.array(), pos, toRead)
+                pos += toRead
+                if (pos >= audio.limit()) {
+                    pos = 0
+                }
             }
             buf.flip()
             return buf

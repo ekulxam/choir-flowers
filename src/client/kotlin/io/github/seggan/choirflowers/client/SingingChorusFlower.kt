@@ -51,7 +51,7 @@ class SingingChorusFlower(pos: BlockPos) : Closeable {
 
     private val sound = pitch.makeSoundAt(playingPos)
 
-    private var muted = false
+    private var muted = true
 
     private fun tick() {
         val playerPos = minecraft.player?.position() ?: return
@@ -115,7 +115,9 @@ class SingingChorusFlower(pos: BlockPos) : Closeable {
         }
 
         fun tickAll() {
-            for (flowersInChunk in singingChorusFlowers.values) {
+            val playerPos = minecraft.player?.blockPosition() ?: return
+            for (chunk in ChunkPos.rangeClosed(ChunkPos(playerPos), 2)) {
+                val flowersInChunk = singingChorusFlowers[chunk] ?: continue
                 for (flower in flowersInChunk.values) {
                     flower.tick()
                 }

@@ -28,7 +28,9 @@ class ChoirFlowersClient : ClientModInitializer {
             SingingChorusFlower.unloadChunk(chunk.pos)
         }
         ClientTickEvents.START_WORLD_TICK.register {
-            SingingChorusFlower.tickAll()
+            //LOGGER.info(measureTime {
+                SingingChorusFlower.tickAll()
+            //}.toString())
         }
 
         DebugScreenEntries.register(DebugEntryCurrentNote.ID, DebugEntryCurrentNote)
