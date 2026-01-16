@@ -1,6 +1,5 @@
 package io.github.seggan.choirflowers.client
 
-import io.github.seggan.choirflowers.client.note.Pitch
 import net.minecraft.client.resources.sounds.AbstractSoundInstance
 import net.minecraft.client.sounds.AudioStream
 import net.minecraft.client.sounds.SoundBufferLibrary
@@ -15,13 +14,12 @@ import javax.sound.sampled.AudioFormat
 import kotlin.math.PI
 import kotlin.math.sin
 
-class ChorusFlowerSound(pitch: Pitch, pos: Vec3) : AbstractSoundInstance(
+class ChorusFlowerSound(private val audio: ShortArray, pos: Vec3) : AbstractSoundInstance(
     Identifier.fromNamespaceAndPath(MOD_ID, "chorus_flower_sing"),
     SoundSource.BLOCKS,
     RandomSource.createNewThreadLocalInstance()
 ) {
 
-    private val audio = pitch.audio
     private var pos = 0
 
     init {

@@ -2,21 +2,58 @@ package io.github.seggan.choirflowers.client
 
 import io.github.seggan.choirflowers.client.note.Note
 import io.github.seggan.choirflowers.client.note.Pitch
+import io.github.seggan.choirflowers.client.note.Scale
 import net.minecraft.client.Minecraft
 import net.minecraft.core.BlockPos
 import net.minecraft.world.level.ChunkPos
 import net.minecraft.world.phys.Vec3
 import java.io.Closeable
+import kotlin.streams.asSequence
 
-class SingingChorusFlower(private val pos: BlockPos) : Closeable {
+class SingingChorusFlower(pos: BlockPos) : Closeable {
 
-    private val sound = ChorusFlowerSound(Pitch(C_PENTATONIC.random(), (3..5).random()), Vec3(pos))
+    private val playingPos = pos.center
+
+    private val pitch: Pitch
+
+    init {
+        val nearbyFlowers = ChunkPos.rangeClosed(ChunkPos(pos), 1).asSequence()
+            .flatMap { singingChorusFlowers[it].orEmpty().values.asSequence() }
+            .filter { canBeHeardAt(it.playingPos) }
+            .groupBy { it.pitch.note }
+            .mapValues { (_, notes) -> notes.map { it.playingPos.distanceTo(playingPos) }.average() }
+        if (nearbyFlowers.isEmpty()) {
+            pitch = Pitch(Note.entries.random(), (3..5).random())
+        } else {
+            val weights = WeightedSet<Scale>()
+            for (scale in Scale.MAJOR_SCALES) {
+                val commonNotes = scale.notes.mapNotNull { nearbyFlowers[it] }
+                val weight = commonNotes.sumOf { (MAX_DISTANCE - it).coerceAtLeast(0.0) } * commonNotes.size
+                weights.add(WeightedSet.Element(scale, weight.toFloat()))
+            }
+            val scale = weights.getRandom()
+
+            val noteWeights = WeightedSet<Note>()
+            noteWeights.add(scale.getNote(1), 2f)
+            noteWeights.add(scale.getNote(2), 0.5f)
+            noteWeights.add(scale.getNote(3), 2f)
+            noteWeights.add(scale.getNote(4), 1f)
+            noteWeights.add(scale.getNote(5), 2f)
+            noteWeights.add(scale.getNote(6), 1f)
+            noteWeights.add(scale.getNote(7), 0.5f)
+            val note = noteWeights.getRandom()
+
+            pitch = Pitch(note, (3..5).random())
+        }
+    }
+
+    private val sound = pitch.makeSoundAt(playingPos)
 
     private var muted = false
 
     private fun tick() {
         val playerPos = minecraft.player?.position() ?: return
-        val isTooFar = playerPos.distanceToSqr(Vec3(pos)) > MAX_DISTANCE * MAX_DISTANCE
+        val isTooFar = !canBeHeardAt(playerPos)
         if (muted && !isTooFar) {
             muted = false
         } else if (!muted && isTooFar) {
@@ -33,15 +70,19 @@ class SingingChorusFlower(private val pos: BlockPos) : Closeable {
         }
     }
 
+    fun canBeHeardAt(pos: Vec3) = pos.distanceToSqr(playingPos) <= MAX_DISTANCE * MAX_DISTANCE
+
     override fun close() {
-        soundManager.stop(sound)
+        if (!muted) {
+            soundManager.stop(sound)
+        }
     }
 
     companion object {
+        private const val MAX_DISTANCE = 16
+
         private val minecraft = Minecraft.getInstance()
         private val soundManager = minecraft.soundManager
-
-        private const val MAX_DISTANCE = 16
 
         private val singingChorusFlowers = mutableMapOf<ChunkPos, MutableMap<BlockPos, SingingChorusFlower>>()
 
@@ -82,5 +123,3 @@ class SingingChorusFlower(private val pos: BlockPos) : Closeable {
         }
     }
 }
-
-private val C_PENTATONIC = listOf(Note.C, Note.D, Note.E, Note.G, Note.A)

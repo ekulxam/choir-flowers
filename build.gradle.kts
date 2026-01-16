@@ -65,6 +65,12 @@ dependencies {
     modImplementation("net.fabricmc:fabric-loader:${deps["fabric_loader"]}")
     modImplementation("net.fabricmc.fabric-api:fabric-api:${deps["fabric_api"]}")
     modImplementation("net.fabricmc:fabric-language-kotlin:${deps["kotlin_fabric_loader"]}")
+
+    testImplementation("net.fabricmc:fabric-loader-junit:${deps["fabric_loader"]}")
+}
+
+tasks.test {
+    useJUnitPlatform()
 }
 
 tasks.processResources {
