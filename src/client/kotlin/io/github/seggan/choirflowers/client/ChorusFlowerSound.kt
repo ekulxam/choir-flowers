@@ -11,8 +11,6 @@ import org.lwjgl.BufferUtils
 import java.nio.ByteBuffer
 import java.util.concurrent.CompletableFuture
 import javax.sound.sampled.AudioFormat
-import kotlin.math.PI
-import kotlin.math.sin
 
 class ChorusFlowerSound(private val audio: ShortArray, pos: Vec3) : AbstractSoundInstance(
     Identifier.fromNamespaceAndPath(MOD_ID, "chorus_flower_sing"),
@@ -41,10 +39,6 @@ class ChorusFlowerSound(private val audio: ShortArray, pos: Vec3) : AbstractSoun
         return CompletableFuture.completedFuture(Audio())
     }
 
-    private val randomFrequency = random.nextDouble()
-    private val randomPhase = random.nextDouble() * PI
-    private val randomAmplitude = random.nextDouble()
-
     private inner class Audio : AudioStream {
 
         override fun getFormat(): AudioFormat = FORMAT
@@ -53,8 +47,7 @@ class ChorusFlowerSound(private val audio: ShortArray, pos: Vec3) : AbstractSoun
             val buf = BufferUtils.createByteBuffer(size)
             while (buf.hasRemaining()) {
                 val sample = audio[pos % audio.size]
-                val preAmp = (randomAmplitude * sin(pos / FORMAT.sampleRate * randomFrequency + randomPhase).toFloat() + 1f) / 2f * 0.5f + 0.5f
-                buf.putShort((sample * preAmp).toInt().toShort())
+                buf.putShort(sample)
                 pos++
             }
             buf.flip()

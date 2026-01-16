@@ -31,17 +31,17 @@ class SingingChorusFlower(pos: BlockPos) : Closeable {
             for (scale in Scale.MAJOR_SCALES) {
                 val commonNotes = scale.notes.mapNotNull { nearbyFlowers[it] }
                 val weight = commonNotes.sumOf { (MAX_DISTANCE - it).coerceAtLeast(0.0) } * commonNotes.size
-                weights.add(WeightedSet.Element(scale, weight.toFloat()))
+                weights.add(WeightedSet.Element(scale, (weight * weight).toFloat()))
             }
             scale = weights.getRandom()
 
             val noteWeights = WeightedSet<Note>()
-            noteWeights.add(scale.getNote(1), 2f)
+            noteWeights.add(scale.getNote(1), 10f)
             noteWeights.add(scale.getNote(2), 0.5f)
-            noteWeights.add(scale.getNote(3), 2f)
-            noteWeights.add(scale.getNote(4), 1f)
-            noteWeights.add(scale.getNote(5), 2f)
-            noteWeights.add(scale.getNote(6), 1f)
+            noteWeights.add(scale.getNote(3), 10f)
+            noteWeights.add(scale.getNote(4), 3f)
+            noteWeights.add(scale.getNote(5), 10f)
+            noteWeights.add(scale.getNote(6), 3f)
             noteWeights.add(scale.getNote(7), 0.5f)
             val note = noteWeights.getRandom()
 
