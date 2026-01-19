@@ -7,6 +7,7 @@ import net.fabricmc.api.ClientModInitializer
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientChunkEvents
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents
 import net.minecraft.client.gui.components.debug.DebugScreenEntries
+import net.minecraft.tags.BiomeTags
 import net.minecraft.world.level.block.Blocks
 import org.slf4j.LoggerFactory
 import javax.sound.sampled.AudioFormat
@@ -20,6 +21,7 @@ class ChoirFlowersClient : ClientModInitializer {
             }
         }
         ClientChunkEvents.CHUNK_LOAD.register { _, chunk ->
+            if (!chunk.getNoiseBiome(0, 0, 0).`is`(BiomeTags.IS_END)) return@register
             chunk.findBlocks({ it.`is`(Blocks.CHORUS_FLOWER) }) { pos, _ ->
                 SingingChorusFlower.startSinging(pos)
             }

@@ -24,12 +24,8 @@ class ChorusFlowerSound(private val audio: ByteBuffer, pos: Vec3) : AbstractSoun
         x = pos.x
         y = pos.y
         z = pos.z
-        volume = 0.1f
+        volume = 0.2f
         looping = true
-    }
-
-    fun setVolume(vol: Float) {
-        volume = vol
     }
 
     override fun getAudioStream(
