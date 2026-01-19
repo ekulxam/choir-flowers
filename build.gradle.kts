@@ -127,6 +127,7 @@ modrinth {
     versionNumber = project.version.toString()
     uploadFile.set(tasks.remapJar)
     dependencies {
+        required.project("fabric-api")
         required.project("fabric-language-kotlin")
     }
 
