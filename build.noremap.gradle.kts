@@ -1,6 +1,6 @@
 plugins {
     kotlin("jvm")
-    id("net.fabricmc.fabric-loom-remap")
+    id("net.fabricmc.fabric-loom")
     id("maven-publish")
     id("com.modrinth.minotaur")
     id("com.dorongold.task-tree") version "4.0.0"
@@ -29,7 +29,7 @@ base {
     archivesName.set(mod.id)
 }
 
-val targetJavaVersion = if (stonecutter.eval(mcVersion, ">=1.20.6")) 21 else 17
+val targetJavaVersion = 25
 
 java {
     toolchain.languageVersion = JavaLanguageVersion.of(targetJavaVersion)
@@ -52,19 +52,14 @@ loom {
 
 repositories {
     mavenLocal()
-    maven("https://maven.parchmentmc.org")
 }
 
 dependencies {
     minecraft("com.mojang:minecraft:$mcVersion")
-    @Suppress("UnstableApiUsage")
-    mappings(loom.layered {
-        officialMojangMappings()
-        parchment("org.parchmentmc.data:parchment-${deps["parchment"]}@zip")
-    })
-    modImplementation("net.fabricmc:fabric-loader:${deps["fabric_loader"]}")
-    modImplementation("net.fabricmc.fabric-api:fabric-api:${deps["fabric_api"]}")
-    modImplementation("net.fabricmc:fabric-language-kotlin:${deps["kotlin_fabric_loader"]}")
+
+    implementation("net.fabricmc:fabric-loader:${deps["fabric_loader"]}")
+    implementation("net.fabricmc.fabric-api:fabric-api:${deps["fabric_api"]}")
+    implementation("net.fabricmc:fabric-language-kotlin:${deps["kotlin_fabric_loader"]}")
 
     testImplementation("net.fabricmc:fabric-loader-junit:${deps["fabric_loader"]}")
 }
@@ -123,7 +118,7 @@ tasks.jar {
 
 tasks.register<Copy>("buildAndCollect") {
     group = "build"
-    from(tasks.remapJar.get().archiveFile)
+    from(tasks.jar.get().archiveFile) // probably?
     into(rootProject.layout.buildDirectory.file("libs/${mod.version}"))
     dependsOn("build")
 }

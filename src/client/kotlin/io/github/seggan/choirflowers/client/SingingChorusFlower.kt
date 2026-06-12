@@ -18,7 +18,7 @@ class SingingChorusFlower(pos: BlockPos) : Closeable {
     val pitch: Pitch
 
     init {
-        val nearbyFlowers = ChunkPos.rangeClosed(ChunkPos(pos), 1).asSequence()
+        val nearbyFlowers = ChunkPos.rangeClosed(ChunkPos.containing(pos), 1).asSequence()
             .flatMap { singingChorusFlowers[it].orEmpty().values.asSequence() }
             .filter { canBeHeardAt(it.playingPos) }
             .groupBy { it.pitch.note }
@@ -91,7 +91,7 @@ class SingingChorusFlower(pos: BlockPos) : Closeable {
         @JvmStatic
         fun startSinging(pos: BlockPos) {
             val pos = pos.immutable()
-            val flowersInChunk = singingChorusFlowers.getOrPut(ChunkPos(pos), ::mutableMapOf)
+            val flowersInChunk = singingChorusFlowers.getOrPut(ChunkPos.containing(pos), ::mutableMapOf)
             if (pos in flowersInChunk) return
             flowersInChunk[pos] = SingingChorusFlower(pos)
         }
@@ -99,7 +99,7 @@ class SingingChorusFlower(pos: BlockPos) : Closeable {
         @JvmStatic
         fun stopSinging(pos: BlockPos) {
             val pos = pos.immutable()
-            val chunkPos = ChunkPos(pos)
+            val chunkPos = ChunkPos.containing(pos)
             val flowersInChunk = singingChorusFlowers[chunkPos] ?: return
             flowersInChunk.remove(pos)?.close()
             if (flowersInChunk.isEmpty()) {
@@ -116,7 +116,7 @@ class SingingChorusFlower(pos: BlockPos) : Closeable {
 
         fun tickAll() {
             val playerPos = minecraft.player?.blockPosition() ?: return
-            for (chunk in ChunkPos.rangeClosed(ChunkPos(playerPos), 2)) {
+            for (chunk in ChunkPos.rangeClosed(ChunkPos.containing(playerPos), 2)) {
                 val flowersInChunk = singingChorusFlowers[chunk] ?: continue
                 for (flower in flowersInChunk.values) {
                     flower.tick()
@@ -125,7 +125,7 @@ class SingingChorusFlower(pos: BlockPos) : Closeable {
         }
 
         fun getInstance(pos: BlockPos): SingingChorusFlower? {
-            val flowersInChunk = singingChorusFlowers[ChunkPos(pos)] ?: return null
+            val flowersInChunk = singingChorusFlowers[ChunkPos.containing(pos)] ?: return null
             return flowersInChunk[pos]
         }
     }

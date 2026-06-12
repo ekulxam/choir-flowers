@@ -29,7 +29,7 @@ class ChoirFlowersClient : ClientModInitializer {
         ClientChunkEvents.CHUNK_UNLOAD.register { _, chunk ->
             SingingChorusFlower.unloadChunk(chunk.pos)
         }
-        ClientTickEvents.START_WORLD_TICK.register {
+        ClientTickEvents./*? >=26 {*/ START_LEVEL_TICK /*?} else {*/ /*START_WORLD_TICK *//*?}*/.register {
             //LOGGER.info(measureTime {
                 SingingChorusFlower.tickAll()
             //}.toString())

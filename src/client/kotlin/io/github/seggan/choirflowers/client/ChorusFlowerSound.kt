@@ -15,7 +15,7 @@ import javax.sound.sampled.AudioFormat
 class ChorusFlowerSound(private val audio: ByteBuffer, pos: Vec3) : AbstractSoundInstance(
     Identifier.fromNamespaceAndPath(MOD_ID, "chorus_flower_sing"),
     SoundSource.BLOCKS,
-    RandomSource.createNewThreadLocalInstance()
+    RandomSource./*? >=26 {*/ createThreadLocalInstance /*?} else {*/ /*createNewThreadLocalInstance *//*?}*/()
 ) {
 
     private var pos = 0
